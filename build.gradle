@@ -1,0 +1,46 @@
+buildscript{
+    ext{
+        dependencyManagementVersion ="1.0.6.RELEASE"
+        springBootVersion="2.0.4.RELEASE"
+
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.14' apply false
+}
+
+apply plugin: "io.spring.dependency-management"
+
+allprojects{
+    group= 'com.github.alamer'
+    version='1.0.0-SNAPSHOT'
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: 'io.franzbecker.gradle-lombok'
+    lombok {
+        version = "1.18.2"
+    }
+    dependencyManagement {
+        imports {
+            mavenBom 'io.spring.platform:platform-bom:Cairo-RELEASE'
+        }
+    }
+}
